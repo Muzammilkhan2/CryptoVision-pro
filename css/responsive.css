@@ -1,0 +1,367 @@
+/* ============================================
+   CryptoVision Pro - Responsive Styles
+   Mobile & Tablet Optimization
+   ============================================ */
+
+/* ============================================
+   Tablet Layout (768px - 1440px)
+   ============================================ */
+@media screen and (max-width: 1440px) {
+    .main-container {
+        grid-template-columns: 65% 35%;
+    }
+    
+    .chart-container {
+        height: 450px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .main-container {
+        grid-template-columns: 1fr;
+        padding: 140px var(--spacing-md) var(--spacing-lg);
+    }
+    
+    .content-right {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-lg);
+    }
+    
+    .whale-card {
+        grid-column: 1 / -1;
+    }
+    
+    .chart-container {
+        height: 400px;
+    }
+    
+    .chart-container-small {
+        height: 300px;
+    }
+}
+
+/* ============================================
+   Mobile Layout (< 768px)
+   ============================================ */
+@media screen and (max-width: 768px) {
+    /* Navigation */
+    .nav-container {
+        height: 60px;
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .nav-logo {
+        font-size: 18px;
+    }
+    
+    .nav-logo i {
+        font-size: 22px;
+    }
+    
+    .logo-pro {
+        font-size: 20px;
+    }
+    
+    .nav-menu {
+        display: none;
+    }
+    
+    .nav-item span {
+        display: none;
+    }
+    
+    .nav-actions {
+        gap: var(--spacing-xs);
+    }
+    
+    .btn-icon {
+        width: 36px;
+        height: 36px;
+    }
+    
+    /* Ticker Banner */
+    .ticker-banner {
+        top: 60px;
+        height: 40px;
+    }
+    
+    .ticker-item {
+        font-size: 12px;
+        gap: 6px;
+    }
+    
+    .ticker-symbol {
+        font-size: 11px;
+    }
+    
+    /* Main Container */
+    .main-container {
+        padding: 115px var(--spacing-sm) var(--spacing-md);
+        gap: var(--spacing-md);
+    }
+    
+    /* Dashboard Cards */
+    .dashboard-card {
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+    
+    .card-title {
+        font-size: 16px;
+    }
+    
+    .card-title i {
+        font-size: 18px;
+    }
+    
+    .card-subtitle {
+        font-size: 12px;
+    }
+    
+    /* Chart Controls */
+    .chart-controls {
+        width: 100%;
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+    
+    .currency-selector,
+    .timeframe-selector {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .currency-btn,
+    .time-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+        flex: 1;
+    }
+    
+    /* Charts */
+    .chart-container {
+        height: 300px;
+    }
+    
+    .chart-container-small {
+        height: 250px;
+    }
+    
+    .gauge-container {
+        height: 220px;
+    }
+    
+    /* Right Content */
+    .content-right {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Fear & Greed */
+    .fear-greed-details {
+        padding: var(--spacing-sm);
+    }
+    
+    .detail-value {
+        font-size: 16px;
+    }
+    
+    .ai-sentiment {
+        padding: var(--spacing-sm);
+    }
+    
+    .ai-sentiment i {
+        font-size: 16px;
+    }
+    
+    .ai-sentiment p {
+        font-size: 12px;
+    }
+    
+    /* Whale Feed */
+    .whale-feed {
+        max-height: 400px;
+    }
+    
+    .whale-transaction {
+        padding: var(--spacing-sm);
+    }
+    
+    .whale-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    .whale-address {
+        font-size: 11px;
+    }
+    
+    .whale-time {
+        font-size: 10px;
+    }
+    
+    .whale-action {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+    
+    .amount-crypto {
+        font-size: 14px;
+    }
+    
+    .amount-usd {
+        font-size: 12px;
+    }
+    
+    /* Toast */
+    .toast-container {
+        top: 70px;
+        right: var(--spacing-sm);
+        left: var(--spacing-sm);
+    }
+    
+    .toast {
+        min-width: unset;
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    
+    .toast-message {
+        font-size: 13px;
+    }
+}
+
+/* ============================================
+   Small Mobile (< 480px)
+   ============================================ */
+@media screen and (max-width: 480px) {
+    .nav-logo .logo-text {
+        font-size: 16px;
+    }
+    
+    .ticker-container {
+        gap: var(--spacing-lg);
+    }
+    
+    .chart-container {
+        height: 250px;
+    }
+    
+    .chart-container-small {
+        height: 200px;
+    }
+    
+    .gauge-container {
+        height: 180px;
+    }
+    
+    .fear-greed-details {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .detail-item {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+
+/* ============================================
+   Landscape Mobile Optimization
+   ============================================ */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .nav-container {
+        height: 50px;
+    }
+    
+    .ticker-banner {
+        top: 50px;
+        height: 35px;
+    }
+    
+    .main-container {
+        padding-top: 100px;
+    }
+    
+    .chart-container {
+        height: 350px;
+    }
+    
+    .whale-feed {
+        max-height: 300px;
+    }
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+    body::before {
+        display: none;
+    }
+    
+    .nav-bar,
+    .ticker-banner,
+    .nav-actions,
+    .loading-overlay,
+    .toast-container {
+        display: none !important;
+    }
+    
+    .main-container {
+        padding-top: var(--spacing-lg);
+        grid-template-columns: 1fr;
+    }
+    
+    .dashboard-card {
+        page-break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #333;
+    }
+}
+
+/* ============================================
+   High DPI / Retina Display
+   ============================================ */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    body::before {
+        background-size: 25px 25px;
+    }
+}
+
+/* ============================================
+   Reduced Motion Support
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .ticker-container {
+        animation: none;
+    }
+    
+    .pulse-dot {
+        animation: none;
+    }
+}
+
+/* ============================================
+   Dark Mode Support (System Preference)
+   ============================================ */
+@media (prefers-color-scheme: light) {
+    /* Already optimized for dark mode */
+    /* Light mode intentionally not supported for this design */
+}
