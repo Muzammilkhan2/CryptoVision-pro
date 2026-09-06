@@ -8,10 +8,11 @@ export function useMarketSocket() {
 
   useEffect(() => {
     // In dev, connects to localhost:4000; in production on Railway, connects to VITE_SOCKET_URL or VITE_API_URL
-    const serverUrl =
+    const rawUrl =
       import.meta.env.VITE_SOCKET_URL ||
       import.meta.env.VITE_API_URL ||
       'http://localhost:4000';
+    const serverUrl = rawUrl.replace(/\/api\/v1\/?$/, '');
 
     const socket: Socket = io(serverUrl, {
       transports: ['websocket', 'polling'],
