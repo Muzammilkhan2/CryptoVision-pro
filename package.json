@@ -16,6 +16,7 @@
     "start:api": "node apps/api/dist/main.js",
     "start:web": "npm run preview --workspace=@cryptovision/web -- --host 0.0.0.0",
     "start": "npm run start:api",
+    "postinstall": "npm run build:shared && npm run prisma:generate",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "docker:up": "docker-compose -f infra/docker/docker-compose.yml up -d",
@@ -23,8 +24,10 @@
     "prisma:generate": "npm run --prefix apps/api prisma:generate",
     "prisma:migrate": "npm run --prefix apps/api prisma:migrate"
   },
+  "dependencies": {
+    "turbo": "^2.0.0"
+  },
   "devDependencies": {
-    "turbo": "^2.0.0",
     "prettier": "^3.2.5"
   },
   "engines": {
