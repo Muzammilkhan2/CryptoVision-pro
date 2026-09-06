@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { ScheduleModule } from '@nestjs/schedule';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 import { PrismaModule } from './modules/prisma/prisma.module';
 import { RedisModule } from './modules/redis/redis.module';
 import { IntegrationsModule } from './modules/integrations/integrations.module';
@@ -26,6 +28,9 @@ import { PortfolioModule } from './modules/portfolio/portfolio.module';
         limit: 120,
       },
     ]),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '..', 'web', 'dist'),
+    }),
     PrismaModule,
     RedisModule,
     IntegrationsModule,
