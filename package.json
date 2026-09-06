@@ -1,0 +1,27 @@
+{
+  "name": "cryptovision-pro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Next-Generation Cryptocurrency Intelligence & Market Analytics Platform",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "docker:up": "docker-compose -f infra/docker/docker-compose.yml up -d",
+    "docker:down": "docker-compose -f infra/docker/docker-compose.yml down",
+    "prisma:generate": "npm run --prefix apps/api prisma:generate",
+    "prisma:migrate": "npm run --prefix apps/api prisma:migrate"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "prettier": "^3.2.5"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
