@@ -94,3 +94,6 @@ desktop.ini
 *.bak
 *.backup
 *.old
+
+# Local Netlify folder
+.netlify

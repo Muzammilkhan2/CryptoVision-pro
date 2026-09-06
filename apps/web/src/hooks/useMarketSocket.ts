@@ -7,8 +7,9 @@ export function useMarketSocket() {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    // In dev, connects to localhost:4000; in production on Railway, connects to VITE_SOCKET_URL or VITE_API_URL
+    // In dev, connects to localhost:4000; in production on Railway, connects to VITE_WS_URL (or legacy VITE_SOCKET_URL / VITE_API_URL)
     const serverUrl =
+      import.meta.env.VITE_WS_URL ||
       import.meta.env.VITE_SOCKET_URL ||
       import.meta.env.VITE_API_URL ||
       'http://localhost:4000';
