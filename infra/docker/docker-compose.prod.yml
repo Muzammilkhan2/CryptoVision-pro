@@ -1,0 +1,144 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: timescale/timescaledb:latest-pg16
+    container_name: cryptovision-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: cryptovision
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d cryptovision"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - cryptovision-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: cryptovision-redis
+    restart: always
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - cryptovision-net
+
+  api:
+    image: ${REGISTRY:-ghcr.io}/${IMAGE_NAME:-cryptovision-pro}/api:${IMAGE_TAG:-latest}
+    container_name: cryptovision-api
+    restart: always
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@postgres:5432/cryptovision?schema=public
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      JWT_ACCESS_TTL: ${JWT_ACCESS_TTL:-15m}
+      JWT_REFRESH_TTL: ${JWT_REFRESH_TTL:-30d}
+      FRONTEND_URL: ${FRONTEND_URL:-https://yourdomain.com}
+      COINGECKO_API_KEY: ${COINGECKO_API_KEY}
+      DEFILLAMA_BASE_URL: ${DEFILLAMA_BASE_URL:-https://api.llama.fi}
+      ETHERSCAN_API_KEY: ${ETHERSCAN_API_KEY}
+      WHALE_ALERT_API_KEY: ${WHALE_ALERT_API_KEY}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      SENTRY_DSN: ${SENTRY_DSN}
+    ports:
+      - "127.0.0.1:4000:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:4000/api/v1/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - cryptovision-net
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  web:
+    image: ${REGISTRY:-ghcr.io}/${IMAGE_NAME:-cryptovision-pro}/web:${IMAGE_TAG:-latest}
+    container_name: cryptovision-web
+    restart: always
+    ports:
+      - "127.0.0.1:3000:80"
+    depends_on:
+      - api
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - cryptovision-net
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: cryptovision-caddy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      CADDY_ADMIN: ${CADDY_ADMIN:-off}
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+      - ./Caddyfile.prod:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - web
+    networks:
+      - cryptovision-net
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 128M
+
+volumes:
+  pgdata:
+    driver: local
+  redisdata:
+    driver: local
+  caddy_data:
+    driver: local
+  caddy_config:
+    driver: local
+
+networks:
+  cryptovision-net:
+    driver: bridge
