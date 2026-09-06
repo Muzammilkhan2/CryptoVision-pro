@@ -128,7 +128,7 @@ jobs:
   deploy:
     name: Deploy to Production
     needs: build-and-push
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && secrets.DEPLOY_HOST != ''
     runs-on: ubuntu-latest
 
     steps:

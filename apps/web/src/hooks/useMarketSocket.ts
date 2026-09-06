@@ -7,14 +7,19 @@ export function useMarketSocket() {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    // In dev, Socket.IO connects to backend on port 4000
-    const socket: Socket = io('http://localhost:4000', {
+    // In dev, connects to localhost:4000; in production on Railway, connects to VITE_SOCKET_URL or VITE_API_URL
+    const serverUrl =
+      import.meta.env.VITE_SOCKET_URL ||
+      import.meta.env.VITE_API_URL ||
+      'http://localhost:4000';
+
+    const socket: Socket = io(serverUrl, {
       transports: ['websocket', 'polling'],
       reconnectionAttempts: 5,
     });
 
     socket.on('connect', () => {
-      // connected
+      // connected to live stream
     });
 
     // Real-time spot ticker stream
